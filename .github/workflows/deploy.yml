@@ -10,9 +10,9 @@ jobs:
       - name: SSH로 EC2에 접속
         uses: appleboy/ssh-action@master
         with:
-          host: ${{secret.EC2_HOST}}
+          host: ${{secrets.EC2_HOST}}
           username: ${{secrets.EC2_USERNAME}}
-          key: ${{secret.EC2_PRIMARY_KEY}}
+          key: ${{secrets.EC2_PRIMARY_KEY}}
 
           script_stop: true
           script: |
