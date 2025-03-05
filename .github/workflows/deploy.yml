@@ -1,0 +1,23 @@
+name: Deploy to EC2
+on:
+  push:
+    branches:
+      - main
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: SSH로 EC2에 접속
+        uses: appleboy/ssh-action@master
+        with:
+          host: ${{secret.EC2_HOST}}
+          username: ${{secrets.EC2_USERNAME}}
+          key: ${{secret.EC2_PRIMARY_KEY}}
+
+          script_stop: true
+          script: |
+            cd /home/ubuntu/SpringBootCICDTest
+            git pull origin main
+            ./gradlew clean build
+            sudo fuser -k -n tcp 8070 || true
+            nohup java -jar build/libs/*SNAPSHOT.jar > ./output.log 2>&1 &
