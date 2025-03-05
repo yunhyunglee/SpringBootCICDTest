@@ -1,0 +1,6 @@
+spring:
+  application:
+    name: SpringBootCICD2
+
+server:
+  port: 8070
